@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-20",
+  "version": "2.20.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.20 adds cinematic living backgrounds and animated tracking/page polish"
+}

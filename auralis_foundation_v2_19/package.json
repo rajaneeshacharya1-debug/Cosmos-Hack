@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-19",
+  "version": "2.19.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.19 adds cinematic desktop/mobile preloaders and glow animation polish"
+}
