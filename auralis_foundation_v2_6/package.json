@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-6",
+  "version": "2.6.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.6 polished mobile web-app styling and bottom navigation"
+}
