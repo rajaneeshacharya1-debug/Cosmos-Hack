@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-17",
+  "version": "2.17.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.17 adds Judge Demo flow, MacroDroid setup page, architecture diagram and command lifecycle UI"
+}

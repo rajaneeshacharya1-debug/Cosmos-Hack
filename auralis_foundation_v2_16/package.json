@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-16",
+  "version": "2.16.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.16 adds working Stop Ring dashboard option and allowed command support"
+}

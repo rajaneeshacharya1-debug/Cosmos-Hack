@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-18",
+  "version": "2.18.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.18 adds improved Demo animation and clear 5-macro setup without breaking tracking"
+}

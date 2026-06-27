@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-14",
+  "version": "2.14.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.14 adds alert audio asset and Stop Ring command"
+}
