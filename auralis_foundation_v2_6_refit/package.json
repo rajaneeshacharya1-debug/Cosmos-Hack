@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-6-refit",
+  "version": "2.6.1",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.6 refit: original V2.6 design with minimal login fit correction"
+}
