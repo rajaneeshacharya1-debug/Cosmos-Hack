@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-12",
+  "version": "2.12.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.12 adds MacroDroid command poller bridge"
+}
