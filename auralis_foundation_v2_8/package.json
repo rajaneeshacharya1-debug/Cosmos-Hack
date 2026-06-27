@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-8",
+  "version": "2.8.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.8 login top breathing space and centered demo card"
+}

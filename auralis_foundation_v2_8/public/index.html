@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Auralis Beacon V2.8</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/styles.css?v=28">
+</head>
+<body>
+<section id="auth" class="auth-screen">
+  <div class="auth-card v2-auth">
+    <div class="auth-left">
+      <div class="logo-row"><div class="logo"></div><div><div class="brand">Auralis</div><div class="sub">A beacon when tracking goes dark.</div></div></div>
+      <div class="hero"><h1>Recover your phone from any screen.</h1><p>Auralis is one account-based app UI. Register a phone once, then use the same web/mobile dashboard from another device to activate recovery, track it and send limited recovery commands.</p></div>
+      <div class="auth-phone-demo" aria-hidden="true">
+        <div class="phone-glass">
+          <div class="phone-top"><span></span><b>Auralis</b><em>Protected</em></div>
+          <div class="phone-map-lines"></div>
+          <div class="phone-card-mini"><b>OPPO F19 Pro</b><span>Live · 82% · Mobile data</span></div>
+        </div>
+      </div>
+      <div class="feature-row"><div><b>One app UI</b><span>Phone + laptop</span></div><div><b>SMS ignition</b><span>Minimal bridge</span></div><div><b>Native agent later</b><span>Real device control</span></div></div>
+    </div>
+    <div class="auth-right">
+      <div class="tabs"><button class="tab active" id="loginTab">Login</button><button class="tab" id="registerTab">Register</button></div>
+      <div class="google-demo">Continue with Google — future production login</div>
+      <div id="loginForm"><div class="field"><div class="label">Email or username</div><input id="loginEmail" autocomplete="off"></div><div class="field"><div class="label">Password</div><input id="loginPassword" type="password" autocomplete="new-password"></div><button class="primary" id="loginBtn">Enter Auralis</button></div>
+      <div id="registerForm" class="hidden"><div class="field"><div class="label">Name</div><input id="regName"></div><div class="field"><div class="label">Email</div><input id="regEmail"></div><div class="field"><div class="label">Password</div><input id="regPassword" type="password"></div><button class="primary" id="regBtn">Create Account</button></div>
+      <div id="authMsg" class="note">Demo login: owner@auralis.local / Auralis@4729</div>
+    </div>
+  </div>
+</section>
+
+<section id="app" class="hidden app-v21">
+  <aside class="sidebar-v2" id="sidebar">
+    <div class="side-logo"><div class="logo"></div><div class="side-brand-text"><div class="brand small">Auralis</div><div class="sub">Unified recovery app</div></div></div>
+    <button class="nav active" data-page="home"><span class="nav-ico">⌂</span><span class="nav-label">Home</span></button>
+    <button class="nav" data-page="devices"><span class="nav-ico">▣</span><span class="nav-label">Devices</span></button>
+    <button class="nav" data-page="track"><span class="nav-ico">⌖</span><span class="nav-label">Track</span></button>
+    <button class="nav" data-page="setup"><span class="nav-ico">◆</span><span class="nav-label">Protection</span></button>
+    <button class="nav" data-page="activity"><span class="nav-ico">↻</span><span class="nav-label">Activity</span></button>
+    <button class="nav" data-page="settings"><span class="nav-ico">⚙</span><span class="nav-label">Settings</span></button>
+    <div class="protect-box"><div>This device</div><strong id="protectText">Checking…</strong><span id="protectSub">Protection status</span></div>
+    <button class="btn ghost logout-side" id="logoutBtn">Logout</button>
+  </aside>
+
+  <main class="main-v2">
+    <header class="topbar-v2">
+      <div class="title-wrap">
+        <button class="icon-btn" id="sidebarToggle" title="Collapse menu">☰</button>
+        <div><h2 id="pageTitle">Auralis Dashboard</h2><p id="pageSub">One interface for protection, tracking and recovery.</p></div>
+      </div>
+      <div class="top-actions">
+        <div class="view-switch" id="viewSwitch">
+          <button class="view-btn active" data-view="desktop">Desktop</button>
+          <button class="view-btn" data-view="compact">Compact</button>
+          <button class="view-btn" data-view="phone">Phone</button>
+        </div>
+        <a class="chip" href="/agent.html" target="_blank">Agent Simulator</a>
+        <span class="chip"><span id="liveDot" class="dot"></span><span id="liveText">No recent packet</span></span>
+      </div>
+    </header>
+
+    <div id="recoveryBar" class="recovery-bar"><div><b>Auralis Recovery Active</b><span id="shareText">Live location · Battery · Network status are being shared.</span></div><button class="btn ghost" data-go="track">Open tracker</button></div>
+
+    <div class="content-v2">
+      <section id="page-home" class="page active"><div class="grid two"><div class="card v2"><h3>Auralis Beacon</h3><p class="note">The final app has one clean UI. A phone can be registered as protected, and any logged-in phone/laptop can track and command registered devices.</p><div class="stats"><div><label>Devices</label><b id="statDevices">--</b></div><div><label>Protection</label><b id="statProtected">--</b></div><div><label>Last seen</label><b id="statSeen">--</b></div></div><div class="actions"><button class="cmd" data-go="setup"><b>Set up this phone</b><span>Register current device</span></button><button class="cmd" data-go="devices"><b>View devices</b><span>Open registered phones</span></button><button class="cmd" data-go="track"><b>Open tracker</b><span>Map and controls</span></button><button class="cmd" id="copyUrlsHome"><b>Copy URLs</b><span>MacroDroid/app links</span></button></div></div><div class="card v2"><h3>Protected phone status bar</h3><p class="note">When recovery is active, the protected phone can show a small top bar explaining what is shared. The advanced UI stays on the tracker side.</p><div class="demo-bar"><b>Auralis Recovery Active</b><span>Live location · Battery · Network status</span></div><div class="note extra-note">Use the Track page’s Phone view to plan the Android layout without building the APK yet.</div></div></div></section>
+
+      <section id="page-devices" class="page"><div class="card v2"><div class="card-head-v2"><div><h3>Your devices</h3><p>Registered phones under this account</p></div><button class="btn" data-go="setup">Register this device</button></div><div id="deviceList" class="device-list"></div></div></section>
+
+      <section id="page-track" class="page">
+        <div class="track-toolbar">
+          <div><b>Tracker layout</b><span>Desktop, tablet landscape and phone layouts are designed together from this page.</span></div>
+          <div class="view-switch inline"><button class="view-btn active" data-view="desktop">Desktop</button><button class="view-btn" data-view="compact">Compact</button><button class="view-btn" data-view="phone">Phone</button></div>
+        </div>
+        <div class="track-v21" id="trackLayout">
+          <aside class="panel device-panel">
+            <div class="panel-head-mini"><h3>Selected device</h3><span class="pill-mini" id="trackPill">Standby</span></div>
+            <div class="state"><span id="mode">STANDBY</span><b id="deviceName">OPPO F19 Pro</b><em id="lastUpdate">No live update yet</em></div>
+            <div class="mini-grid"><div><label>Battery</label><b id="battery">--</b></div><div><label>Network</label><b id="network">--</b></div><div><label>Latitude</label><b id="lat">--</b></div><div><label>Longitude</label><b id="lng">--</b></div></div>
+            <div class="panel-buttons"><button class="btn wide" id="copyUrls">Copy API URLs</button><button class="btn wide" id="simMove">Simulate packet</button></div>
+            <details class="integration"><summary>Integration URLs</summary><pre id="urlBox" class="urls"></pre></details>
+          </aside>
+
+          <main class="map-card" id="mapCard"><div class="map-tools"><button class="btn ghost map-fullscreen-btn" id="mapFullscreenBtn">Fullscreen map</button></div><div id="map"></div><div class="stream"><b>Live stream:</b> <span id="streamText">Waiting for first packet.</span></div></main>
+
+          <aside class="panel command-panel">
+            <div class="panel-head-mini"><h3>Recovery controls</h3><span class="pill-mini">Limited demo-safe commands</span></div>
+            <div class="control-stack">
+              <button class="primary-control" data-cmd="RESUME_RECOVERY"><b>Resume Recovery</b><span>Reconnect the protected phone to live recovery mode.</span></button>
+              <button class="primary-control ring" data-cmd="RING"><b>Ring Device</b><span>Audible alert for nearby recovery.</span></button>
+              <div class="mode-card">
+                <div><b>Tracking mode</b><span>Choose update strategy after the phone is online.</span></div>
+                <div class="mode-buttons"><button data-cmd="NORMAL_TRACKING">Normal</button><button data-cmd="POWER_SAVE">Power save</button></div>
+              </div>
+              <button class="primary-control danger" data-cmd="STOP_RECOVERY"><b>Stop Recovery</b><span>End live sharing and return to protected standby.</span></button>
+            </div>
+            <details class="queue" open><summary>Command queue</summary><div id="commands"></div></details>
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-setup" class="page"><div class="grid two"><div class="card v2"><h3>Register this device</h3><p class="note">In the final Android app this setup is done once after installation.</p><div class="form"><label>Device name</label><input id="setupName" value="OPPO F19 Pro"><label>Model</label><input id="setupModel" value="OPPO F19 Pro"><button class="primary" id="setupBtn">Complete protection setup</button></div></div><div class="card v2"><h3>Protection status</h3><div class="big-status" id="setupStatus">Checking…</div><p class="note" id="setupNote">Small protected/not protected chip in the final app.</p><div class="mini-grid"><div><label>Location</label><b id="shareLoc">When active</b></div><div><label>Battery</label><b>Yes</b></div><div><label>Network</label><b>Yes</b></div><div><label>Commands</label><b>Yes</b></div></div></div></div></section>
+
+      <section id="page-activity" class="page"><div class="grid two"><div class="card v2"><h3>Command history</h3><div id="activityCommands"></div></div><div class="card v2"><h3>Event timeline</h3><div id="events"></div></div></div></section>
+
+      <section id="page-settings" class="page"><div class="grid two"><div class="card v2"><h3>Server config</h3><div class="form"><label>Tracking interval</label><input id="cfgTrack" type="number"><label>Command poll interval</label><input id="cfgPoll" type="number"><label>Power save interval</label><input id="cfgPower" type="number"><label>Voice alert text</label><textarea id="cfgVoice"></textarea><button class="primary" id="saveCfg">Save config</button></div></div><div class="card v2"><h3>Final-version notes</h3><div class="event"><b>Static domain</b><br>Current stable demo URL can point to this laptop server through ngrok. Final product should use hosted backend.</div><div class="event"><b>Web app limit</b><br>A browser/PWA can show the dashboard, but it cannot reliably receive SMS, run MacroDroid actions, turn mobile data on, or execute commands while locked.</div><div class="event"><b>Android agent</b><br>Final protected-device control should be a native Android foreground service. The web UI remains excellent for the tracker dashboard.</div></div></div></section>
+    </div>
+
+    <nav class="mobile-nav"><button class="active" data-page="home">Home</button><button data-page="devices">Devices</button><button data-page="track">Track</button><button data-page="setup">Setup</button><button data-page="settings">Settings</button></nav>
+  </main>
+</section>
+<div class="version">Auralis v2.8 · port 8800</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="/app.js?v=28"></script>
+</body></html>
