@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" class="agent-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Auralis Agent Simulator V2.0</title>
+<link rel="stylesheet" href="/styles.css?v=22">
+<style>
+/* V2.0 definitive agent scroll fix */
+html.agent-page,
+html.agent-page body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+body.agent-body {
+  display: block !important;
+  min-height: 100vh !important;
+  padding: 16px 16px 110px 16px !important;
+}
+html.agent-page .agent-shell {
+  align-items: start !important;
+  max-width: 1180px !important;
+  margin: 0 auto !important;
+  padding-bottom: 110px !important;
+}
+html.agent-page .card {
+  min-height: 0 !important;
+}
+html.agent-page .card-body {
+  overflow: visible !important;
+}
+html.agent-page .log {
+  min-height: 360px !important;
+  max-height: 520px !important;
+  overflow-y: auto !important;
+}
+html.agent-page .version {
+  position: fixed !important;
+  right: 10px !important;
+  bottom: 8px !important;
+}
+@media (max-width: 900px) {
+  body.agent-body {
+    padding-bottom: 130px !important;
+  }
+  html.agent-page .agent-shell {
+    padding-bottom: 130px !important;
+  }
+}
+</style>
+</head>
+<body class="agent-body">
+<div class="agent-shell">
+  <section class="card">
+    <div class="card-head"><div class="logo"></div><div><div class="top-title">Auralis Agent Simulator</div><div class="sub">Tests the protocol before Android app</div></div></div>
+    <div class="card-body">
+      <div class="field"><div class="label">Server URL</div><input id="server" value="http://localhost:8800"></div>
+      <div class="row"><div class="field"><div class="label">Device ID</div><input id="device" value="oppo-f19"></div><div class="field"><div class="label">Token</div><input id="token" value="auralis-demo-token-4729"></div></div>
+      <div class="row"><div class="field"><div class="label">Latitude</div><input id="lat" value="27.7172"></div><div class="field"><div class="label">Longitude</div><input id="lng" value="85.3240"></div></div>
+      <div class="row"><div class="field"><div class="label">Battery</div><input id="battery" value="82"></div><div class="field"><div class="label">Mode</div><input id="mode" value="LIVE_TRACKING"></div></div>
+      <div class="btns"><button class="btn" id="packetBtn">Send Packet</button><button class="btn" id="streamBtn">Start Stream</button><button class="btn warn" id="pollBtn">Start Polling</button><button class="btn danger" id="stopBtn">Stop All</button></div>
+      <div class="section">How it works</div><div class="note">Open the dashboard in another tab. Click dashboard command buttons. This simulator polls the same endpoint that the Android app will later use.</div>
+    </div>
+  </section>
+  <section class="card">
+    <div class="card-head"><div><div class="top-title">Agent Runtime</div><div class="sub">Location stream · command polling · command completion</div></div></div>
+    <div class="card-body">
+      <div class="stategrid"><div class="metric"><div class="k">Stream</div><div class="v" id="streamState">OFF</div></div><div class="metric"><div class="k">Polling</div><div class="v" id="pollState">OFF</div></div><div class="metric"><div class="k">Last Command</div><div class="v" id="lastCommand">--</div></div><div class="metric"><div class="k">Config</div><div class="v" id="cfgState">--</div></div></div>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+</div>
+<div class="version">Auralis Agent Sim v2.2 · port 8800</div>
+<script src="/agent.js?v=22"></script>
+</body>
+</html>
