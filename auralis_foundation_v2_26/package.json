@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-26",
+  "version": "2.26.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.26 fixes Tracker Showcase bindings and fullscreen demo flow"
+}

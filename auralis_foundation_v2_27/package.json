@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-27",
+  "version": "2.27.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.27 fixes live tracker rendering and adds ring/stop sequence to Tracker Showcase"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-28",
+  "version": "2.28.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.28 improves Tracker Showcase stat focus, mobile spotlight accuracy and Android preloader"
+}

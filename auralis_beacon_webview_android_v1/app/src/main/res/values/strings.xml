@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Auralis Beacon</string>
+    <string name="auralis_url">https://barbecue-fog-boots.ngrok-free.dev</string>
+</resources>
