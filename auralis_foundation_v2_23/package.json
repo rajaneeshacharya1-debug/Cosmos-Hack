@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-23",
+  "version": "2.23.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.23 fixes login button responsiveness and cleans duplicate auto-demo JavaScript"
+}
