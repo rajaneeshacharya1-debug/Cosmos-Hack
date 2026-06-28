@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-22",
+  "version": "2.22.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.22 adds precision auto-demo scan mode with page-by-page element focus"
+}

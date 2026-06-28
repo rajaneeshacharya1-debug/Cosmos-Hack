@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Auralis Beacon V2.22</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/styles.css?v=222">
+</head>
+<body>
+
+  <div class="auralis-ambient-field" aria-hidden="true">
+    <span style="--x:7%;--y:18%;--s:1;--d:.2s"></span>
+    <span style="--x:16%;--y:78%;--s:.75;--d:1.1s"></span>
+    <span style="--x:31%;--y:32%;--s:.9;--d:.5s"></span>
+    <span style="--x:47%;--y:90%;--s:.65;--d:2s"></span>
+    <span style="--x:58%;--y:14%;--s:1.15;--d:1.5s"></span>
+    <span style="--x:76%;--y:58%;--s:.8;--d:.9s"></span>
+    <span style="--x:91%;--y:24%;--s:.7;--d:2.7s"></span>
+  </div>
+
+
+  <div id="auralisPreloader" aria-hidden="true">
+    <div class="preloader-desktop">
+      <div class="pre-grid"></div>
+      <div class="pre-scan"></div>
+      <div class="pre-orbit">
+        <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+        <div class="pre-core">
+          <div class="core-ring r1"></div>
+          <div class="core-ring r2"></div>
+          <div class="core-ring r3"></div>
+          <div class="core-dot"></div>
+          <div class="core-beam b1"></div>
+          <div class="core-beam b2"></div>
+          <div class="core-beam b3"></div>
+          <div class="core-beam b4"></div>
+        </div>
+      </div>
+      <div class="pre-copy">
+        <div class="pre-brand"><span>A</span><b>AURALIS</b></div>
+        <h1>Beacon ignition sequence</h1>
+        <p>SMS bridge · Command queue · Live recovery</p>
+        <div class="pre-loader-line"><i></i></div>
+        <div class="pre-steps"><em>device link</em><em>secure poll</em><em>map sync</em><em>ready</em></div>
+      </div>
+      <div class="pre-packets">
+        <span style="--x:8%;--y:22%;--d:.1s"></span><span style="--x:18%;--y:71%;--d:.9s"></span><span style="--x:30%;--y:15%;--d:1.8s"></span><span style="--x:44%;--y:83%;--d:.4s"></span><span style="--x:62%;--y:18%;--d:1.2s"></span><span style="--x:77%;--y:73%;--d:.7s"></span><span style="--x:90%;--y:32%;--d:1.5s"></span>
+      </div>
+    </div>
+    <div class="preloader-phone">
+      <div class="phone-pre-shell">
+        <div class="phone-pre-notch"></div>
+        <div class="phone-pre-map"></div>
+        <div class="phone-pre-beacon"><span></span></div>
+        <div class="phone-pre-card"><b>Auralis Beacon</b><em>Recovery bridge starting...</em></div>
+      </div>
+      <div class="phone-pre-text"><b>AURALIS</b><span>Finding signal path</span></div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var done=function(){document.documentElement.classList.add('preload-done')};
+      var ms = window.matchMedia && window.matchMedia('(max-width: 720px)').matches ? 1450 : 2350;
+      window.addEventListener('load', function(){ setTimeout(done, ms); });
+      setTimeout(done, 4200);
+    })();
+  </script>
+
+<section id="auth" class="auth-screen">
+  <div class="auth-card v2-auth">
+    <div class="auth-left">
+      <div class="logo-row"><div class="logo"></div><div><div class="brand">Auralis</div><div class="sub">A beacon when tracking goes dark.</div></div></div>
+      <div class="hero"><h1>Recover your phone from any screen.</h1><p>Auralis is one account-based app UI. Register a phone once, then use the same web/mobile dashboard from another device to activate recovery, track it and send limited recovery commands.</p></div>
+      <div class="auth-showcase" aria-label="Auralis login feature preview">
+        <div class="auth-phone-demo" aria-hidden="true">
+          <div class="phone-glass">
+            <div class="phone-top"><span></span><b>Auralis</b><em>Protected</em></div>
+            <div class="phone-map-lines"></div>
+            <div class="phone-card-mini"><b>OPPO F19 Pro</b><span>Live · 82% · Mobile data</span></div>
+          </div>
+        </div>
+        <div class="feature-row"><div><b>One app UI</b><span>Phone + laptop</span></div><div><b>SMS ignition</b><span>Minimal bridge</span></div><div><b>Native agent later</b><span>Real device control</span></div></div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="tabs"><button class="tab active" id="loginTab">Login</button><button class="tab" id="registerTab">Register</button></div>
+      <div class="google-demo">Continue with Google — future production login</div>
+      <div id="loginForm"><div class="field"><div class="label">Email or username</div><input id="loginEmail" autocomplete="off"></div><div class="field"><div class="label">Password</div><input id="loginPassword" type="password" autocomplete="new-password"></div><button class="btn ghost quick-fill-login" id="quickFillLoginBtn" type="button">Quick fill demo login</button><button class="primary" id="loginBtn">Enter Auralis</button></div>
+      <div id="registerForm" class="hidden"><div class="field"><div class="label">Name</div><input id="regName"></div><div class="field"><div class="label">Email</div><input id="regEmail"></div><div class="field"><div class="label">Password</div><input id="regPassword" type="password"></div><button class="primary" id="regBtn">Create Account</button></div>
+      <div id="authMsg" class="note">Demo login: owner@auralis.local / Auralis@4729</div>
+    </div>
+  </div>
+</section>
+
+<section id="app" class="hidden app-v21">
+  <aside class="sidebar-v2" id="sidebar">
+    <div class="side-logo"><div class="logo"></div><div class="side-brand-text"><div class="brand small">Auralis</div><div class="sub">Unified recovery app</div></div></div>
+    <button class="nav active" data-page="home"><span class="nav-ico">⌂</span><span class="nav-label">Home</span></button>
+    <button class="nav" data-page="devices"><span class="nav-ico">▣</span><span class="nav-label">Devices</span></button>
+    <button class="nav" data-page="track"><span class="nav-ico">⌖</span><span class="nav-label">Track</span></button>
+    <button class="nav" data-page="setup"><span class="nav-ico">◆</span><span class="nav-label">Protection</span></button>
+    <button class="nav" data-page="demo"><span class="nav-ico">▶</span><span class="nav-label">Demo</span></button>
+    <button class="nav" data-page="macros"><span class="nav-ico">▤</span><span class="nav-label">Macro Setup</span></button>
+    <button class="nav" data-page="activity"><span class="nav-ico">↻</span><span class="nav-label">Activity</span></button>
+    <button class="nav" data-page="settings"><span class="nav-ico">⚙</span><span class="nav-label">Settings</span></button>
+    <div class="protect-box"><div>This device</div><strong id="protectText">Checking…</strong><span id="protectSub">Protection status</span></div>
+    <button class="btn ghost logout-side" id="logoutBtn">Logout</button>
+  </aside>
+
+  <main class="main-v2">
+    <header class="topbar-v2">
+      <div class="title-wrap">
+        <button class="icon-btn" id="sidebarToggle" title="Collapse menu">☰</button>
+        <div><h2 id="pageTitle">Auralis Dashboard</h2><p id="pageSub">One interface for protection, tracking and recovery.</p></div>
+      </div>
+      <div class="top-actions">
+        <div class="view-switch" id="viewSwitch">
+          <button class="view-btn active" data-view="desktop">Desktop</button>
+          <button class="view-btn" data-view="compact">Compact</button>
+          <button class="view-btn" data-view="phone">Phone</button>
+        </div>
+        <button class="chip auto-demo-launch" id="autoDemoBtn" type="button">Auto Demo</button><a class="chip" href="/agent.html" target="_blank">Agent Simulator</a>
+        <span class="chip"><span id="liveDot" class="dot"></span><span id="liveText">No recent packet</span></span>
+      </div>
+    </header>
+
+    <div id="recoveryBar" class="recovery-bar"><div><b>Auralis Recovery Active</b><span id="shareText">Live location · Battery · Network status are being shared.</span></div><button class="btn ghost" data-go="track">Open tracker</button></div>
+
+    <div class="content-v2">
+      <section id="page-home" class="page active"><div class="grid two"><div class="card v2"><h3>Auralis Beacon</h3><p class="note">The final app has one clean UI. A phone can be registered as protected, and any logged-in phone/laptop can track and command registered devices.</p><div class="stats"><div><label>Devices</label><b id="statDevices">--</b></div><div><label>Protection</label><b id="statProtected">--</b></div><div><label>Last seen</label><b id="statSeen">--</b></div></div><div class="actions"><button class="cmd" data-go="setup"><b>Set up this phone</b><span>Register current device</span></button><button class="cmd" data-go="devices"><b>View devices</b><span>Open registered phones</span></button><button class="cmd" data-go="track"><b>Open tracker</b><span>Map and controls</span></button><button class="cmd auto-demo-card-btn" id="autoDemoHomeBtn"><b>Auto Demo</b><span>Hands-free product tour</span></button><button class="cmd" data-go="demo"><b>Demo</b><span>Animated recovery flow</span></button><button class="cmd" data-go="macros"><b>Macro setup</b><span>Exact 5-macro stack</span></button><button class="cmd" id="copyUrlsHome"><b>Copy URLs</b><span>MacroDroid/app links</span></button></div></div><div class="card v2"><h3>Protected phone status bar</h3><p class="note">When recovery is active, the protected phone can show a small top bar explaining what is shared. The advanced UI stays on the tracker side.</p><div class="demo-bar"><b>Auralis Recovery Active</b><span>Live location · Battery · Network status</span></div><div class="note extra-note">Use the Track page’s Phone view to plan the Android layout without building the APK yet.</div></div></div></section>
+
+      <section id="page-devices" class="page"><div class="card v2"><div class="card-head-v2"><div><h3>Your devices</h3><p>Registered phones under this account</p></div><button class="btn" data-go="setup">Register this device</button></div><div id="deviceList" class="device-list"></div></div></section>
+
+      <section id="page-track" class="page">
+        <div class="track-toolbar">
+          <div><b>Tracker layout</b><span>Desktop, tablet landscape and phone layouts are designed together from this page.</span></div>
+          <div class="view-switch inline"><button class="view-btn active" data-view="desktop">Desktop</button><button class="view-btn" data-view="compact">Compact</button><button class="view-btn" data-view="phone">Phone</button></div>
+        </div>
+        <div class="track-v21" id="trackLayout">
+          <aside class="panel device-panel">
+            <div class="panel-head-mini"><h3>Selected device</h3><span class="pill-mini" id="trackPill">Standby</span></div>
+            <div class="state"><span id="mode">STANDBY</span><b id="deviceName">OPPO F19 Pro</b><em id="lastUpdate">No live update yet</em></div>
+            <div class="mini-grid"><div><label>Battery</label><b id="battery">--</b></div><div><label>Network</label><b id="network">--</b></div><div><label>Latitude</label><b id="lat">--</b></div><div><label>Longitude</label><b id="lng">--</b></div></div>
+            <div class="panel-buttons"><button class="btn wide" id="copyUrls">Copy API URLs</button><button class="btn wide" id="simMove">Simulate packet</button></div>
+            <details class="integration"><summary>Integration URLs</summary><pre id="urlBox" class="urls"></pre></details>
+          </aside>
+
+          <main class="map-card" id="mapCard"><div class="map-tools"><button class="btn ghost map-fullscreen-btn" id="mapFullscreenBtn">Fullscreen map</button></div><div id="map"></div><div class="stream"><b>Live stream:</b> <span id="streamText">Waiting for first packet.</span></div></main>
+
+          <aside class="panel command-panel">
+            <div class="panel-head-mini"><h3>Recovery controls</h3><span class="pill-mini">Poller bridge ready</span></div>
+            <div class="control-stack">
+              <button class="primary-control" data-cmd="RESUME_RECOVERY"><b>Resume Recovery</b><span>Reconnect the protected phone to live recovery mode.</span></button>
+              <div class="ring-command-pair"><button class="primary-control ring" data-cmd="RING"><b>Ring Device</b><span>Start repeated audible alert on the protected phone.</span></button><button class="primary-control stop-ring" data-cmd="STOP_RING"><b>Stop Ring</b><span>Stop the repeated alert while keeping recovery online.</span></button></div>
+              <div class="mode-card">
+                <div><b>Tracking mode</b><span>Choose update strategy after the phone is online.</span></div>
+                <div class="mode-buttons"><button data-cmd="NORMAL_TRACKING">Normal</button><button data-cmd="POWER_SAVE">Power save</button></div>
+              </div>
+              <button class="primary-control danger" data-cmd="STOP_RECOVERY"><b>Stop Recovery</b><span>End live sharing and return to protected standby.</span></button>
+            </div>
+            <details class="queue" open><summary>Command queue</summary><div id="commands"></div></details>
+          </aside>
+        </div>
+      </section>
+
+      <section id="page-setup" class="page"><div class="grid two"><div class="card v2"><h3>Register this device</h3><p class="note">In the final Android app this setup is done once after installation.</p><div class="form"><label>Device name</label><input id="setupName" value="OPPO F19 Pro"><label>Model</label><input id="setupModel" value="OPPO F19 Pro"><button class="primary" id="setupBtn">Complete protection setup</button></div></div><div class="card v2"><h3>Protection status</h3><div class="big-status" id="setupStatus">Checking…</div><p class="note" id="setupNote">Small protected/not protected chip in the final app.</p><div class="mini-grid"><div><label>Location</label><b id="shareLoc">When active</b></div><div><label>Battery</label><b>Yes</b></div><div><label>Network</label><b>Yes</b></div><div><label>Commands</label><b>Yes</b></div></div><div class="bridge-mini"><h4>Command poller bridge</h4><p>One MacroDroid macro can poll the server, execute limited commands, then report completion.</p><div class="bridge-stats"><span>Last poll: <b id="bridgeLastPoll">--</b></span><span>Last response: <b id="bridgeLastResponse">--</b></span></div></div></div></div></section>
+
+
+      <section id="page-demo" class="page">
+        <div class="demo-stage card v2">
+          <div>
+            <span class="eyebrow">Demo Mode</span>
+            <h3>Live recovery flow</h3>
+            <p class="note">This page animates the actual product story: SMS ignition, server command queue, MacroDroid polling, and protected-phone actions.</p>
+            <div class="demo-action-row">
+              <button class="btn primary-auto" id="demoAutoRunBtn">Run auto demo</button><button class="btn" id="demoResetBtn">Reset state</button>
+              <button class="btn" data-go="track">Open tracker</button>
+              <button class="btn" data-go="macros">Macro setup</button>
+            </div>
+          </div>
+          <div class="demo-live-panel">
+            <div><label>Device state</label><b id="demoDeviceState">--</b></div>
+            <div><label>Last packet</label><b id="demoLastPacket">--</b></div>
+            <div><label>Bridge poll</label><b id="demoBridgePoll">--</b></div>
+            <div><label>Latest command</label><b id="demoLatestCommand">--</b></div>
+          </div>
+        </div>
+
+        <div class="animated-recovery-flow card v2">
+          <div class="flow-node active"><span>1</span><b>SMS ignition</b><em>Lost phone receives boot SMS</em></div>
+          <div class="flow-line"><i></i></div>
+          <div class="flow-node server"><span>2</span><b>Auralis server</b><em>Updates state + queues commands</em></div>
+          <div class="flow-line"><i></i></div>
+          <div class="flow-node poller"><span>3</span><b>Command poller</b><em>MacroDroid checks every 1–2s</em></div>
+          <div class="flow-line"><i></i></div>
+          <div class="flow-node phone"><span>4</span><b>Protected phone</b><em>Tracks, rings, stops/resumes</em></div>
+        </div>
+
+        <div class="demo-command-board">
+          <div class="demo-command-card">
+            <span>Alert</span>
+            <h4>Ring Device</h4>
+            <p>Creates <b>RING</b>. Poller sets <b>Auralis_Ring_Enabled=true</b>.</p>
+            <button class="btn" data-cmd="RING">Ring Device</button>
+          </div>
+          <div class="demo-command-card stop-ring-demo">
+            <span>Alert</span>
+            <h4>Stop Ring</h4>
+            <p>Creates <b>STOP_RING</b>. Poller sets <b>Auralis_Ring_Enabled=false</b>.</p>
+            <button class="btn ghost" data-cmd="STOP_RING">Stop Ring</button>
+          </div>
+          <div class="demo-command-card">
+            <span>Tracking</span>
+            <h4>Stop Recovery</h4>
+            <p>Stops live stream only. <b>Recovery_Mode stays true</b>, so polling continues.</p>
+            <button class="btn danger" data-cmd="STOP_RECOVERY">Stop Recovery</button>
+          </div>
+          <div class="demo-command-card">
+            <span>Tracking</span>
+            <h4>Resume Recovery</h4>
+            <p>Turns <b>Live_Tracking_Enabled=true</b> and location packets resume.</p>
+            <button class="btn" data-cmd="RESUME_RECOVERY">Resume Recovery</button>
+          </div>
+        </div>
+
+        <div class="card v2 command-theatre">
+          <div class="card-head-v2">
+            <div><h3>Live command lifecycle</h3><p>Shows real command state as the protected phone polls and completes it.</p></div>
+            <span class="pill-mini">PENDING → RECEIVED → COMPLETED</span>
+          </div>
+          <div id="demoLifecycle" class="lifecycle-preview"><div class="empty-life">No command yet. Click Ring Device or Stop Ring.</div></div>
+        </div>
+
+        <div class="card v2 architecture-card architecture-pro">
+          <span class="eyebrow">System map</span><h3>Architecture</h3>
+          <div class="arch-diagram">
+            <div class="arch-node"><b>Dashboard</b><span>Owner controls lost device</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><b>Auralis server</b><span>Device state and command queue</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><b>MacroDroid bridge</b><span>Hackathon Android bridge</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><b>Native agent later</b><span>Production Android service</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-macros" class="page">
+        <div class="card v2">
+          <div class="card-head-v2">
+            <div>
+              <h3>MacroDroid setup <span class="macro-count-badge">5 macros</span></h3>
+              <p>Exact five-macro bridge. The top row shows all 5 macros; the variable row below shows the shared state.</p>
+            </div>
+            <button class="btn" data-go="settings">Open URLs</button>
+          </div>
+          <div class="macro-five-strip">
+            <div><span>01</span><b>Boot SMS</b><em>SMS ignition</em></div>
+            <div><span>02</span><b>Live Tracking</b><em>3–5s location stream</em></div>
+            <div><span>03</span><b>Command Poller</b><em>1–2s server poll</em></div>
+            <div><span>04</span><b>Ring Loop</b><em>value-change + 7–8s repeat</em></div>
+            <div><span>05</span><b>Emergency Stop</b><em>full SMS shutdown</em></div>
+          </div>
+          <h4 class="section-mini-title">Shared variables</h4>
+          <div class="variable-grid">
+            <div><b>Recovery_Mode</b><span>Bridge/poller active. Dashboard Stop Recovery keeps this true.</span></div>
+            <div><b>Live_Tracking_Enabled</b><span>Controls location streaming only.</span></div>
+            <div><b>Auralis_Ring_Enabled</b><span>Controls repeated ring loop.</span></div>
+            <div><b>Auralis_Command_Response</b><span>Latest macro-poll response used in if-blocks.</span></div>
+          </div>
+        </div>
+
+        <div class="macro-stack">
+          <div class="macro-card">
+            <span class="macro-num">01</span><h4>Auralis Boot SMS</h4>
+            <dl><dt>Trigger</dt><dd>SMS received: <code>#AURALIS-BOOT-4729</code></dd><dt>Actions</dt><dd>Set Recovery_Mode=true, Live_Tracking_Enabled=true, Auralis_Ring_Enabled=false, then send BOOT URL.</dd></dl>
+          </div>
+          <div class="macro-card">
+            <span class="macro-num">02</span><h4>Auralis Live Tracking Stream</h4>
+            <dl><dt>Trigger</dt><dd>Regular interval: 3–5 seconds.</dd><dt>Constraints</dt><dd>Recovery_Mode=true AND Live_Tracking_Enabled=true.</dd><dt>Action</dt><dd>Send LIVE URL with battery, latitude, longitude and MOBILE_DATA.</dd></dl>
+          </div>
+          <div class="macro-card primary-macro">
+            <span class="macro-num">03</span><h4>Auralis Command Poller FAST</h4>
+            <dl><dt>Trigger</dt><dd>Regular interval: 1–2 seconds.</dd><dt>Constraint</dt><dd>Recovery_Mode=true.</dd><dt>Initial poll</dt><dd>GET <code>/macro-poll</code> and save response to <code>Auralis_Command_Response</code>.</dd><dt>Conditions</dt><dd>Use exact checks: <code>CMD:STOP_RING;</code>, <code>CMD:RING;</code>, <code>CMD:STOP_RECOVERY;</code>, <code>CMD:RESUME_RECOVERY;</code>, <code>CMD:NORMAL_TRACKING;</code>, <code>CMD:POWER_SAVE;</code>.</dd></dl>
+          </div>
+          <div class="macro-card">
+            <span class="macro-num">04</span><h4>Auralis Ring Loop FAST</h4>
+            <dl><dt>Triggers</dt><dd>Any Change in Value: Auralis_Ring_Enabled, plus Regular interval every 7–8 seconds.</dd><dt>Constraints</dt><dd>Recovery_Mode=true AND Auralis_Ring_Enabled=true.</dd><dt>Actions</dt><dd>Set media volume high and play <code>auralis-beacon-alert.wav</code>.</dd></dl>
+          </div>
+          <div class="macro-card danger-macro">
+            <span class="macro-num">05</span><h4>Auralis Emergency SMS Stop</h4>
+            <dl><dt>Trigger</dt><dd>SMS received: <code>#AURALIS-STOP-4729</code></dd><dt>Actions</dt><dd>Set Recovery_Mode=false, Live_Tracking_Enabled=false, Auralis_Ring_Enabled=false, stop sound, send STOP URL.</dd></dl>
+          </div>
+        </div>
+
+        <div class="card v2 macro-rules">
+          <h3>Rules that prevent sync bugs</h3>
+          <div class="rule-list">
+            <div><b>Dashboard Stop Recovery must not set Recovery_Mode=false.</b><span>It only pauses Live_Tracking_Enabled so the poller can still resume.</span></div>
+            <div><b>Use CMD:RING; not loose RING.</b><span>STOP_RING contains RING, so loose matching can trigger the wrong block.</span></div>
+            <div><b>Ring Loop uses Auralis_Ring_Enabled.</b><span>Auralis_Command_Response is only the latest poll text, not a stable state.</span></div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="page-activity" class="page"><div class="grid two"><div class="card v2"><h3>Command history</h3><div id="activityCommands"></div></div><div class="card v2"><h3>Event timeline</h3><div id="events"></div></div></div></section>
+
+      <section id="page-settings" class="page"><div class="grid two"><div class="card v2"><h3>Server config</h3><div class="form"><label>Tracking interval</label><input id="cfgTrack" type="number"><label>Command poll interval</label><input id="cfgPoll" type="number"><label>Power save interval</label><input id="cfgPower" type="number"><label>Voice alert text</label><textarea id="cfgVoice"></textarea><button class="primary" id="saveCfg">Save config</button></div></div><div class="card v2"><h3>MacroDroid Command Poller</h3><p class="note">Use this as the fourth demo macro. It checks the server for a pending command, runs limited phone actions, then reports completion.</p><div class="audio-link-card"><b>Auralis alert audio</b><span id="audioUrlText">/auralis-beacon-alert.wav</span><button class="btn ghost" id="copyAudioBtn">Copy audio link</button></div><pre id="bridgeBox" class="urls"></pre><div class="bridge-steps"><div><b>Poll</b><span>Regular interval, every 5 seconds while Recovery_Mode = true.</span></div><div><b>If response contains RING</b><span>Play the Auralis alert sound or speak alert, then call complete URL.</span></div><div><b>If response contains STOP_RING</b><span>Stop playback / disable ring loop, then call complete URL.</span></div><div><b>If response contains STOP_RECOVERY</b><span>Set Live_Tracking_Enabled false, keep Recovery_Mode true, then call complete URL.</span></div><div><b>If response contains NORMAL_TRACKING / POWER_SAVE / RESUME_RECOVERY</b><span>Set your tracking variables, then call complete URL.</span></div></div></div></div></section>
+    </div>
+
+    <nav class="mobile-nav"><button class="active" data-page="home">Home</button><button data-page="devices">Devices</button><button data-page="track">Track</button><button data-page="demo">Demo</button><button data-page="macros">Macros</button><button data-page="settings">Settings</button></nav>
+  </main>
+</section>
+<div class="version">Auralis v2.22 · port 8800</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="/app.js?v=222"></script>
+</div>
+
+
+  <div id="autoDemoOverlay" class="auto-demo-overlay hidden" aria-live="polite">
+    <div class="auto-demo-mini">
+      <div class="auto-demo-mini-top">
+        <b>Auto demo</b>
+        <span id="autoDemoStep">00/00</span>
+        <button id="autoDemoStop" type="button" title="Stop auto demo">×</button>
+      </div>
+      <p id="autoDemoTitle">Ready</p>
+      <div class="auto-demo-progress"><i id="autoDemoProgress"></i></div>
+    </div>
+  </div>
+  <div id="autoDemoSpotlight" class="auto-demo-spotlight hidden" aria-hidden="true"></div>
+
+</body></html>
