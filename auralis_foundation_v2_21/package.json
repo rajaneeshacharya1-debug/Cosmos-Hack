@@ -1,0 +1,9 @@
+{
+  "name": "auralis-foundation-v2-21",
+  "version": "2.21.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Auralis Beacon V2.21 adds auto demonstrator, credential autofill and deeper visual polish"
+}
